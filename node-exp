@@ -1,9 +1,28 @@
 useradd --no-create-home --shell /bin/false node_exporter
-curl -LO https://github.com/prometheus/node_exporter/releases/download/v0.15.1/node_exporter-0.15.1.linux-amd64.tar.gz
-tar xvf node_exporter-0.15.1.linux-amd64.tar.gz
-cp node_exporter-0.15.1.linux-amd64/node_exporter /usr/local/bin
-chown node_exporter:node_exporter /usr/local/bin/node_exporter
-rm -rf node_exporter-0.15.1.linux-amd64.tar.gz node_exporter-0.15.1.linux-amd64
-cp node_exporter.service /etc/systemd/system/node_exporter.service
+
+# If you want a specific version of the node_exporter, set it here, you can see the list at https://github.com/prometheus/node_exporter/releases
+PACKAGE_NAME="node_exporter-0.16.0.linux-amd64"
+
+# Fetching the archive
+curl -L https://github.com/prometheus/node_exporter/releases/download/v0.16.0/$PACKAGE_NAME.tar.gz -o $PACKAGE_NAME.tar.gz
+
+# Extracting the archive
+tar xzvf $PACKAGE_NAME.tar.gz
+
+# Moving the executable to /usr/bin
+cp $PACKAGE_NAME/node_exporter /usr/bin
+
+# Marking it as executable
+chmod +x /usr/bin/node_exporter
+
+# Copying the systemd unit file
+cp ./node_exporter.service /etc/systemd/system
+
+# Reloading systemd
 systemctl daemon-reload
+
+# Enabling the service
+systemctl enable node_exporter
+
+# Running the service
 systemctl start node_exporter

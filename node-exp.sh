@@ -1,20 +1,14 @@
 #!/bin/bash
 
-version="${VERSION:-1.7.1}"
-arch="${ARCH:-linux-amd64}"
-bin_dir="${BIN_DIR:-/usr/local/bin}"
+wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
 
-curl -o /tmp/node_exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v$version/node_exporter-$version.$arch.tar.gz 
+tar -zxvf node_exporter-1.7.0.linux-amd64.tar.gz
+mv node_exporter*/node_exporter /usr/local/bin/
 
-mkdir -p /tmp/node_exporter
-
-cd /tmp || { echo "ERROR! No /tmp found.."; exit 1; }
-
-tar xfz /tmp/node_exporter.tar.gz -C /tmp/node_exporter || { echo "ERROR! Extracting the node_exporter tar"; exit 1; }
-
-cp "/tmp/node_exporter/node_exporter-$version.$arch/node_exporter" "$bin_dir"
 useradd --no-create-home --shell /bin/false node_exporter
-chown node_exporter:node_exporter "$bin_dir/node_exporter"
+chown node_exporter:node_exporter /usr/local/bin/node_exporter
+
+ls -al /usr/local/bin/node_exporter
 
 cat <<EOF > /etc/systemd/system/node_exporter.service
 [Unit]

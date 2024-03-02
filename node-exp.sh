@@ -4,8 +4,7 @@ version="${VERSION:-1.7.1}"
 arch="${ARCH:-linux-amd64}"
 bin_dir="${BIN_DIR:-/usr/local/bin}"
 
-wget "https://github.com/prometheus/node_exporter/releases/download/v$version/node_exporter-$version.$arch.tar.gz" \
-    -O /tmp/node_exporter.tar.gz
+curl -o /tmp/node_exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v$version/node_exporter-$version.$arch.tar.gz 
 
 mkdir -p /tmp/node_exporter
 

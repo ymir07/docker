@@ -10,6 +10,9 @@ sudo mv prometheus /usr/local/bin
 sudo mv promtool /usr/local/bin
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
+sudo mv consoles /etc/prometheus
+sudo mv console_libraries /etc/prometheus
+sudo mv prometheus.yml /etc/prometheus
 sudo chown prometheus:prometheus /etc/prometheus
 sudo chown -R prometheus:prometheus /etc/prometheus/consoles
 sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
